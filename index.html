@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Biology Protein Synthesis Quiz</title>
+
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #dff6ff, #f4f4f4);
+    text-align: center;
+    margin: 0;
+    padding: 40px 20px;
+}
+
+h1 {
+    color: #12355b;
+    margin-bottom: 5px;
+}
+
+h2 {
+    color: #2878a7;
+    margin-top: 5px;
+}
+
+#quiz {
+    background: white;
+    max-width: 700px;
+    margin: 30px auto;
+    padding: 35px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+}
+
+#progress {
+    font-weight: bold;
+    color: #555;
+}
+
+#question {
+    font-size: 22px;
+    margin: 25px 0;
+}
+
+#answers button {
+    display: block;
+    width: 90%;
+    margin: 12px auto;
+    padding: 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: #f8f8f8;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#answers button:hover {
+    background: #e6f4ff;
+    transform: scale(1.02);
+}
+
+#next {
+    background: #2878a7;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 13px 30px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+#next:hover {
+    background: #1d5f87;
+}
+
+#result {
+    font-size: 25px;
+    color: #12355b;
+}
+        
+           
+    </style>
+</head>
+
+<body>
+
+    <h1>Biology Quiz</h1>
+    <h2>Protein Synthesis</h2>
+
+    <div id="quiz">
+
+        <p id="progress"></p>
+
+        <h3 id="question"></h3>
+
+        <div id="answers"></div>
+
+        <button id="next">Next Question</button>
+
+        <p id="result"></p>
+
+    </div>
+
+    <script>
+        
+
+const questions = [
+
+    {
+        question: "What is the basic unit of DNA?",
+        answers: ["Nucleotide", "Amino acid", "Protein", "Enzyme"],
+        correct: "Nucleotide"
+    },
+
+    {
+        question: "Which base is found in DNA but not normally in RNA?",
+        answers: ["Uracil", "Thymine", "Guanine", "Cytosine"],
+        correct: "Thymine"
+    },
+
+    {
+        question: "Which base is found in RNA instead of thymine?",
+        answers: ["Uracil", "Adenine", "Guanine", "Cytosine"],
+        correct: "Uracil"
+    },
+
+    {
+        question: "What is the process by which DNA makes an identical copy of itself?",
+        answers: ["Translation", "Transcription", "Replication", "Mutation"],
+        correct: "Replication"
+    },
+
+    {
+        question: "During DNA replication, adenine pairs with:",
+        answers: ["Guanine", "Cytosine", "Thymine", "Uracil"],
+        correct: "Thymine"
+    },
+
+    {
+        question: "What is the process of making mRNA from DNA called?",
+        answers: ["Replication", "Translation", "Transcription", "Mutation"],
+        correct: "Transcription"
+    },
+
+    {
+        question: "Which enzyme joins RNA nucleotides during transcription?",
+        answers: ["DNA polymerase", "RNA polymerase", "Ligase", "Pepsin"],
+        correct: "RNA polymerase"
+    },
+
+    {
+        question: "Which molecule carries the genetic message from DNA to the ribosome?",
+        answers: ["tRNA", "mRNA", "DNA", "Amino acid"],
+        correct: "mRNA"
+    },
+
+    {
+        question: "What is a group of three bases on mRNA called?",
+        answers: ["Anticodon", "Codon", "Gene", "Nucleotide"],
+        correct: "Codon"
+    },
+
+    {
+        question: "Which molecule carries amino acids to the ribosome?",
+        answers: ["mRNA", "DNA", "tRNA", "rRNA"],
+        correct: "tRNA"
+    },
+
+    {
+        question: "What is the three-base sequence on tRNA called?",
+        answers: ["Codon", "Anticodon", "Gene", "Nucleotide"],
+        correct: "Anticodon"
+    },
+
+    {
+        question: "Where does translation take place?",
+        answers: ["Ribosome", "Nucleus", "Mitochondrion", "Cell membrane"],
+        correct: "Ribosome"
+    },
+
+    {
+        question: "What does a ribosome read during translation?",
+        answers: ["DNA", "mRNA codons", "Amino acids", "Lipids"],
+        correct: "mRNA codons"
+    },
+
+    {
+        question: "Which ribosome site receives an incoming tRNA?",
+        answers: ["A site", "P site", "E site", "D site"],
+        correct: "A site"
+    },
+
+    {
+        question: "Which ribosome site holds the tRNA carrying the growing polypeptide?",
+        answers: ["A site", "P site", "E site", "R site"],
+        correct: "P site"
+    },
+
+    {
+        question: "Which ribosome site is where the empty tRNA exits?",
+        answers: ["A site", "P site", "E site", "T site"],
+        correct: "E site"
+    },
+
+    {
+        question: "What type of bond joins amino acids together?",
+        answers: ["Hydrogen bond", "Peptide bond", "Ionic bond", "Glycosidic bond"],
+        correct: "Peptide bond"
+    },
+
+    {
+        question: "What is the usual start codon on mRNA?",
+        answers: ["UAA", "AUG", "UGA", "UAG"],
+        correct: "AUG"
+    },
+
+    {
+        question: "Which of the following is a stop codon?",
+        answers: ["AUG", "UAA", "GCU", "AUC"],
+        correct: "UAA"
+    },
+
+    {
+        question: "What is the overall flow of genetic information used in protein synthesis?",
+        answers: [
+            "Protein → RNA → DNA",
+            "DNA → mRNA → Protein",
+            "RNA → DNA → Protein",
+            "DNA → Protein → RNA"
+        ],
+        correct: "DNA → mRNA → Protein"
+    }
+
+];
+
+let currentQuestion = 0;
+let score = 0;
+let answered = false;
+
+function shuffle(array) {
+
+    for (let i = array.length - 1; i > 0; i--) {
+
+        let j = Math.floor(Math.random() * (i + 1));
+
+        [array[i], array[j]] = [array[j], array[i]];
+
+    }
+
+}
+
+shuffle(questions);
+
+
+function showQuestion() {
+
+    answered = false;
+
+    const questionElement = document.getElementById("question");
+    const answersElement = document.getElementById("answers");
+    const progressElement = document.getElementById("progress");
+
+    questionElement.textContent =
+        questions[currentQuestion].question;
+
+    progressElement.textContent =
+        "Question " + (currentQuestion + 1) +
+        " of " + questions.length;
+
+    answersElement.innerHTML = "";
+
+    let answers =
+        [...questions[currentQuestion].answers];
+
+    shuffle(answers);
+
+
+    answers.forEach(function(answer) {
+
+        const button =
+            document.createElement("button");
+
+        button.textContent = answer;
+
+        button.onclick = function() {
+
+            checkAnswer(button, answer);
+
+        };
+
+        answersElement.appendChild(button);
+
+    });
+
+}
+
+
+function checkAnswer(button, answer) {
+
+    if (answered) {
+        return;
+    }
+
+    answered = true;
+
+    const correctAnswer =
+        questions[currentQuestion].correct;
+
+    const buttons =
+        document.querySelectorAll("#answers button");
+
+
+    buttons.forEach(function(btn) {
+
+        btn.disabled = true;
+
+        if (btn.textContent === correctAnswer) {
+
+            btn.style.backgroundColor = "lightgreen";
+
+        }
+
+    });
+
+
+    if (answer === correctAnswer) {
+
+        score++;
+
+        button.style.backgroundColor = "lightgreen";
+
+    } else {
+
+        button.style.backgroundColor = "#ff9999";
+
+    }
+
+}
+
+
+document.getElementById("next").onclick = function() {
+
+    if (!answered) {
+
+        alert("Please select an answer first.");
+
+        return;
+
+    }
+
+
+    currentQuestion++;
+
+
+    if (currentQuestion < questions.length) {
+
+        showQuestion();
+
+    } else {
+
+        document.getElementById("quiz").innerHTML =
+
+            "<h2>🎉 Quiz Complete!</h2>" +
+
+            "<p id='result'>Your score is " +
+
+            score + " out of " +
+
+            questions.length +
+
+            "</p>" +
+
+            "<button onclick='location.reload()'>" +
+
+            "Restart Quiz</button>";
+
+    }
+
+};
+
+
+showQuestion();
+
+</script>
+
+        
+              
+        
+
+          
+
+    </script>
+
+</body>
+</html>
